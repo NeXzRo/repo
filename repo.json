@@ -32,7 +32,7 @@
     "Name": "Better Targeting System",
     "Description": "A more intelligent targeting system for the game which also includes new keybinds.",
     "Punchline": "PvP check be gone!",
-    "InternalName": "BetterTargetingSystem",
+    "InternalName": "BetterTargetingSystemPvP",
     "AssemblyVersion": "0.15.3.0",
     "TestingAssemblyVersion": "0.15.3.0",
     "RepoUrl": "https://github.com/NeXzRo/BetterTargetingSystem",
