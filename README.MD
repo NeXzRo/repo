@@ -1,6 +1,6 @@
 ### Repo URL:
 ```
--
+https://raw.githubusercontent.com/NeXzRo/Repo/main/repo.json
 ```
 
 ---
