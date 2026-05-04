@@ -4,6 +4,9 @@ on:
     paths:
       - 'repo.json'
 
+env:
+  FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
+
 jobs:
   update-readme:
     runs-on: ubuntu-latest
@@ -11,14 +14,23 @@ jobs:
       contents: write
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Update README
         run: |
-          sed '/<!-- START_LIST -->/q' README.md > README.new
-          jq -r '.[] | "* [**\(.Name)**](\(.RepoUrl)) `v\(.AssemblyVersion)` — \(.Punchline)"' repo.json >> README.new
-          sed -n '/<!-- END_LIST -->/,$p' README.md >> README.new
-          mv README.new README.md
+          LIST=$(jq -r '.[] | "* [**\(.Name)**](\(.RepoUrl)) `v\(.AssemblyVersion)` — \(.Punchline)"' repo.json)
+          python3 -c "
+          import sys
+          with open('README.md', 'r') as f: content = f.read()
+          start_marker, end_marker = '<!-- START_LIST -->', '<!-- END_LIST -->'
+          if start_marker in content and end_marker in content:
+              before = content.split(start_marker)[0]
+              after = content.split(end_marker)[1]
+              new_content = before + start_marker + '\n' + sys.stdin.read() + '\n' + end_marker + after
+              with open('README.md', 'w') as f: f.write(new_content)
+          " <<EOF
+          $LIST
+          EOF
 
       - name: Commit and Push
         run: |
