@@ -20,7 +20,7 @@ jobs:
       - name: Update README
         run: |
           COUNT=$(jq '. | length' repo.json)
-          LIST=$(jq -r '.[] | .RepoUrl as $url | ($url | sub("/$"; "") | sub(".git$"; "") | split("/") | .[-2] + "/" + .[-1]) as $repo | "* [**\(.Name)**](\($url)) `v\(.AssemblyVersion)` — \(.Punchline) ![Downloads](https://img.shields.io/github/downloads/\($repo)/total?style=flat-square&label=%20&color=success)"' repo.json || echo "")
+          LIST=$(jq -r '.[] | .RepoUrl as $url | ($url | sub("/$"; "") | sub(".git$"; "") | split("/") | .[-2] + "/" + .[-1]) as $repo | "* [**\(.Name)**](\($url)) `v\(.AssemblyVersion)` — \(.Punchline) ![Release](https://img.shields.io/github/v/release/\($repo)?style=flat-square&label=Latest&color=blue) ![Downloads](https://img.shields.io/github/downloads/\($repo)/total?style=flat-square&label=%20&color=success)"' repo.json || echo "")
           if [ -z "$LIST" ]; then
             exit 1
           fi
@@ -60,7 +60,7 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
           git add .
           if [ -n "$(git status --porcelain)" ]; then
-            git commit -m "docs: update plugin list and moved badges"
+            git commit -m "docs: finalize plugin list with health checks"
             git push
           else
             echo "No changes to commit"
