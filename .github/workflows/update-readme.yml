@@ -21,22 +21,36 @@ jobs:
         run: |
           LIST=$(jq -r '.[] | "* [**\(.Name)**](\(.RepoUrl)) `v\(.AssemblyVersion)` — \(.Punchline)"' repo.json || echo "")
           if [ -z "$LIST" ]; then
-            echo "Error: Plugin list is empty or repo.json is invalid"
+            echo "Error: repo.json is empty or invalid"
             exit 1
           fi
           python3 -c "
           import sys
           import os
-          if not os.path.exists('README.md'):
+          import re
+          
+          # Suche nach README.md (unabhängig von Groß/Kleinschreibung)
+          files = [f for f in os.listdir('.') if f.lower() == 'readme.md']
+          if not files:
+              print('Error: No README.md found')
               sys.exit(1)
-          with open('README.md', 'r', encoding='utf-8') as f: content = f.read()
-          start_marker, end_marker = '<!-- START_LIST -->', '<!-- END_LIST -->'
-          if start_marker in content and end_marker in content:
-              before = content.split(start_marker)[0]
-              after = content.split(end_marker)[1]
-              new_content = before + start_marker + '\n' + sys.stdin.read() + '\n' + end_marker + after
-              with open('README.md', 'w', encoding='utf-8') as f: f.write(new_content)
+          
+          filename = files[0]
+          with open(filename, 'r', encoding='utf-8') as f:
+              content = f.read()
+          
+          start_m = '<!-- START_LIST -->'
+          end_m = '<!-- END_LIST -->'
+          
+          if start_m in content and end_m in content:
+              pattern = re.compile(f'{start_m}.*?{end_m}', re.DOTALL)
+              replacement = f'{start_m}\n{sys.stdin.read()}\n{end_m}'
+              new_content = pattern.sub(replacement, content)
+              with open(filename, 'w', encoding='utf-8') as f:
+                  f.write(new_content)
+              print(f'Successfully updated {filename}')
           else:
+              print(f'Error: Markers not found in {filename}')
               sys.exit(1)
           " <<EOF
           $LIST
@@ -46,9 +60,9 @@ jobs:
         run: |
           git config --global user.name "github-actions[bot]"
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
-          git add README.md
+          git add .
           if [ -n "$(git status --porcelain)" ]; then
-            git commit -m "docs: update plugin list in README"
+            git commit -m "docs: update plugin list"
             git push
           else
             echo "No changes to commit"
