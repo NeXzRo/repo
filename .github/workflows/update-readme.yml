@@ -19,16 +19,25 @@ jobs:
 
       - name: Update README
         run: |
-          LIST=$(jq -r '.[] | "* [**\(.Name)**](\(.RepoUrl)) `v\(.AssemblyVersion)` — \(.Punchline)"' repo.json)
+          LIST=$(jq -r '.[] | "* [**\(.Name)**](\(.RepoUrl)) `v\(.AssemblyVersion)` — \(.Punchline)"' repo.json || echo "")
+          if [ -z "$LIST" ]; then
+            echo "Error: Plugin list is empty or repo.json is invalid"
+            exit 1
+          fi
           python3 -c "
           import sys
-          with open('README.md', 'r') as f: content = f.read()
+          import os
+          if not os.path.exists('README.md'):
+              sys.exit(1)
+          with open('README.md', 'r', encoding='utf-8') as f: content = f.read()
           start_marker, end_marker = '<!-- START_LIST -->', '<!-- END_LIST -->'
           if start_marker in content and end_marker in content:
               before = content.split(start_marker)[0]
               after = content.split(end_marker)[1]
               new_content = before + start_marker + '\n' + sys.stdin.read() + '\n' + end_marker + after
-              with open('README.md', 'w') as f: f.write(new_content)
+              with open('README.md', 'w', encoding='utf-8') as f: f.write(new_content)
+          else:
+              sys.exit(1)
           " <<EOF
           $LIST
           EOF
