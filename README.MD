@@ -1,3 +1,6 @@
+# Repo [![Update Status](https://github.com/NeXzRo/Repo/actions/workflows/update-readme.yml/badge.svg)](https://github.com/NeXzRo/Repo/actions/workflows/update-readme.yml) ![Plugins](https://img.shields.io/badge/Plugins-2-blue?style=flat-square)
+
+
 ### Repo URL:
 ```
 https://nexzro.github.io/Repo/repo.json
