@@ -21,7 +21,6 @@ jobs:
         run: |
           LIST=$(jq -r '.[] | "* [**\(.Name)**](\(.RepoUrl)) `v\(.AssemblyVersion)` — \(.Punchline)"' repo.json || echo "")
           if [ -z "$LIST" ]; then
-            echo "Error: repo.json is empty or invalid"
             exit 1
           fi
           python3 -c "
@@ -29,10 +28,8 @@ jobs:
           import os
           import re
           
-          # Suche nach README.md (unabhängig von Groß/Kleinschreibung)
           files = [f for f in os.listdir('.') if f.lower() == 'readme.md']
           if not files:
-              print('Error: No README.md found')
               sys.exit(1)
           
           filename = files[0]
@@ -48,9 +45,7 @@ jobs:
               new_content = pattern.sub(replacement, content)
               with open(filename, 'w', encoding='utf-8') as f:
                   f.write(new_content)
-              print(f'Successfully updated {filename}')
           else:
-              print(f'Error: Markers not found in {filename}')
               sys.exit(1)
           " <<EOF
           $LIST
