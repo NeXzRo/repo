@@ -12,7 +12,7 @@ Paste the URL above into Dalamud → Settings → Experimental → Custom Plugin
 
 ## 📦 Available Plugins
 <!-- START_LIST -->
-* [**Customize+**](https://github.com/NeXzRo/CustomizePlus) `v2.1.0.3` — Updated for 7.5 • by Kyara ![Release](https://img.shields.io/github/v/release/NeXzRo/CustomizePlus?style=flat-square&label=Latest&color=blue) ![Downloads](https://img.shields.io/github/downloads/NeXzRo/CustomizePlus/total?style=flat-square&label=%20&color=success)
-* [**Better Targeting System**](https://github.com/NeXzRo/BetterTargetingSystem) `v0.15.3.3` — Updated (No PvP Check) • by Kyara ![Release](https://img.shields.io/github/v/release/NeXzRo/BetterTargetingSystem?style=flat-square&label=Latest&color=blue) ![Downloads](https://img.shields.io/github/downloads/NeXzRo/BetterTargetingSystem/total?style=flat-square&label=%20&color=success)
+* [**Customize+**](https://github.com/NeXzRo/CustomizePlus) `v2.1.0.4` — Updated for 7.5 • by Kyara ![Release](https://img.shields.io/github/v/release/NeXzRo/CustomizePlus?style=flat-square&label=Latest&color=blue) ![Downloads](https://img.shields.io/github/downloads/NeXzRo/CustomizePlus/total?style=flat-square&label=%20&color=success)
+* [**Better Targeting System**](https://github.com/NeXzRo/BetterTargetingSystem) `v0.15.3.4` — Updated (No PvP Check) • by Kyara ![Release](https://img.shields.io/github/v/release/NeXzRo/BetterTargetingSystem?style=flat-square&label=Latest&color=blue) ![Downloads](https://img.shields.io/github/downloads/NeXzRo/BetterTargetingSystem/total?style=flat-square&label=%20&color=success)
 
 <!-- END_LIST -->
