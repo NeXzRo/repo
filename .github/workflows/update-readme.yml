@@ -26,3 +26,4 @@ jobs:
           git add README.md
           git commit -m "docs: update plugin list in README" || exit 0
           git push
+          
